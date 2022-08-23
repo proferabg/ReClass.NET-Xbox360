@@ -11,6 +11,7 @@ using ReClassNET.Memory;
 using ReClassNET.Nodes;
 using ReClassNET.Plugins;
 using ReClassNET.Util.Conversion;
+using Xbox360Plugin.Pointer32;
 using XDevkit;
 
 namespace Xbox360Plugin
@@ -21,11 +22,7 @@ namespace Xbox360Plugin
 
         private IPluginHost host;
         private IXboxConsole console;
-
-        private IXboxModules lastModules;
-        private IXboxSections lastSections;
-
-        private long moduleLastRefresh = 0;
+        private IXboxDebugTarget debugTarget;
 
         private byte[] lastBuffer;
         private uint lastAddress;
@@ -60,9 +57,7 @@ namespace Xbox360Plugin
 
         public void CloseRemoteProcess(IntPtr process)
         {
-            lastSections = null;
-            lastModules = null;
-            moduleLastRefresh = 0;
+            debugTarget.DisconnectAsDebugger();
         }
 
         public bool ReadRemoteMemory(IntPtr process, IntPtr address, ref byte[] buffer, int offset, int size)
@@ -135,9 +130,7 @@ namespace Xbox360Plugin
                 try
                 {
                     console.Connect(out console);
-
-                    IXboxDebugTarget debugTarget = console.DebugTarget;
-
+                    debugTarget = console.DebugTarget;
                     debugTarget.ConnectAsDebugger(console.XboxIP(), XboxDebugConnectFlags.Force);
 
                     foreach (IXboxModule module in debugTarget.Modules)
@@ -153,7 +146,6 @@ namespace Xbox360Plugin
                         };
                         callbackProcess(ref data);
                     }
-                    debugTarget.DisconnectAsDebugger();
                 }
                 catch (Exception ex)
                 {
@@ -169,19 +161,7 @@ namespace Xbox360Plugin
             {
                 try
                 {
-                    IXboxDebugTarget debugTarget = console.DebugTarget;
-                    if (moduleLastRefresh + 10000 < DateTimeOffset.Now.ToUnixTimeMilliseconds())
-                    {
-                        console.Connect(out console);
-
-                        debugTarget.ConnectAsDebugger(console.XboxIP(), XboxDebugConnectFlags.Force);
-
-                        lastModules = debugTarget.Modules; 
-                        
-                        moduleLastRefresh = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-                    }
-                    
-                    foreach (IXboxModule module in lastModules)
+                    foreach (IXboxModule module in debugTarget.Modules)
                     {
                         uint processAddress = (uint)(process.ToInt64() & 0xFFFFFFFF);
                         if (processAddress != module.ModuleInfo.BaseAddress) continue;
@@ -195,10 +175,7 @@ namespace Xbox360Plugin
                         };
                         callbackModule(ref moduleData);
 
-                        if (module.Sections != null)
-                            lastSections = module.Sections;
-
-                        foreach (IXboxSection section in lastSections)
+                        foreach (IXboxSection section in module.Sections)
                         {
                             XBOX_SECTION_INFO sectionInfo = section.SectionInfo;
                             SectionCategory category = SectionCategory.Unknown;
@@ -227,7 +204,6 @@ namespace Xbox360Plugin
                         }
 
                     }
-                    debugTarget.DisconnectAsDebugger();
                 }
                 catch (Exception ex)
                 {
@@ -238,7 +214,7 @@ namespace Xbox360Plugin
 
         public void ControlRemoteProcess(IntPtr process, ControlRemoteProcessAction action)
         {
-            // Not supported.
+            MessageBox.Show("Not yet implemented!", "Error");
         }
 
         public bool AttachDebuggerToProcess(IntPtr id)
@@ -267,8 +243,17 @@ namespace Xbox360Plugin
         public bool SetHardwareBreakpoint(IntPtr id, IntPtr address, HardwareBreakpointRegister register, HardwareBreakpointTrigger trigger, HardwareBreakpointSize size, bool set)
         {
             // Not supported.
-
             return false;
+        }
+
+        public override CustomNodeTypes GetCustomNodeTypes()
+        {
+            return new CustomNodeTypes
+            {
+                CodeGenerator = new Pointer32CodeGenerator(),
+                Serializer = new Pointer32NodeConverter(),
+                NodeTypes = new[] { typeof(Pointer32Node) }
+            };
         }
     }
 }
