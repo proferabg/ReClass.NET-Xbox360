@@ -6,7 +6,7 @@ namespace Xbox360Plugin.TextPointers
 {
 	public class Utf16TextPtr32Node : BaseTextPtr32Node
 	{
-		public override Encoding Encoding => Encoding.Unicode;
+		public override Encoding Encoding => Encoding.BigEndianUnicode;
 
 		public override void GetUserInterfaceInfo(out string name, out Image icon)
 		{
