@@ -121,6 +121,12 @@
   <data name="B16x16_Button_Pointer32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\B16x16_Button_Pointer32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="B16x16_Button_Text_Pointer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\B16x16_Button_Text_Pointer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="B16x16_Button_UText_Pointer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\B16x16_Button_UText_Pointer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

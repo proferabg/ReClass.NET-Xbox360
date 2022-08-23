@@ -81,15 +81,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pointer32\Pointer32CodeGenerator.cs" />
+    <Compile Include="Xbox360PluginCodeGenerator.cs" />
     <Compile Include="Pointer32\Pointer32Node.cs" />
-    <Compile Include="Pointer32\Pointer32NodeConverter.cs" />
+    <Compile Include="Xbox360PluginNodeConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TextPointers\BaseTextPtr32Node.cs" />
+    <Compile Include="TextPointers\UTF16TextPtr32Node.cs" />
+    <Compile Include="TextPointers\UTF8TextPtr32Node.cs" />
     <Compile Include="Xbox360PluginExt.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -112,7 +115,15 @@
   <ItemGroup>
     <None Include="Resources\B16x16_Button_Pointer32.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="PPCFunction\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\B16x16_Button_Text_Pointer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\B16x16_Button_UText_Pointer.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

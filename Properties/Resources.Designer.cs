@@ -73,6 +73,26 @@ namespace Xbox360Plugin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap B16x16_Button_Text_Pointer {
+            get {
+                object obj = ResourceManager.GetObject("B16x16_Button_Text_Pointer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap B16x16_Button_UText_Pointer {
+            get {
+                object obj = ResourceManager.GetObject("B16x16_Button_UText_Pointer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon {
             get {
                 object obj = ResourceManager.GetObject("icon", resourceCulture);

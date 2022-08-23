@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,10 +6,10 @@ using JRPC_Client;
 using ReClassNET.Core;
 using ReClassNET.Debugger;
 using ReClassNET.Memory;
-using ReClassNET.Nodes;
 using ReClassNET.Plugins;
 using ReClassNET.Util.Conversion;
 using Xbox360Plugin.Pointer32;
+using Xbox360Plugin.TextPointers;
 using XDevkit;
 
 namespace Xbox360Plugin
@@ -250,9 +248,9 @@ namespace Xbox360Plugin
         {
             return new CustomNodeTypes
             {
-                CodeGenerator = new Pointer32CodeGenerator(),
-                Serializer = new Pointer32NodeConverter(),
-                NodeTypes = new[] { typeof(Pointer32Node) }
+                CodeGenerator = new Xbox360PluginCodeGenerator(),
+                Serializer = new Xbox360PluginNodeConverter(),
+                NodeTypes = new[] { typeof(Pointer32Node), typeof(Utf16TextPtr32Node), typeof(Utf8TextPtr32Node) }
             };
         }
     }
